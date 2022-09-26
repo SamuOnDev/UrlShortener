@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -79,19 +83,22 @@ namespace UrlShortenerApiBackend.Controllers
         // POST: api/UrlLists
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "User")]
         public async Task<ActionResult<UrlList>> PostUrlList(UrlDto urlDto)
         {
-            var shortUrl = _userUrlListService.RegisterUrl(urlDto);
+            //var shortUrl = _userUrlListService.RegisterUrl(urlDto);
+            var user = HttpContext.User;
 
+            var userId = HttpContext.User.Claims.First(i => i.Type == "Id").Value;
 
-
+            // TODO: Agregar la funcion para guardar la URL en tu lista con el numero de ID del usuario y el resto de funcion con el Short, para que el return sea el link Short 
 
             //_context.UrlLists.Add(urlList);
             //await _context.SaveChangesAsync();
 
             //return CreatedAtAction("GetUrlList", new { id = urlList.Id }, urlList);
 
-            return Ok($"Url Creada: {shortUrl}");
+            return Ok($"Url Creada: {userId}");
         }
 
         // DELETE: api/UrlLists/5

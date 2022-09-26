@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using UrlShortenerApiBackend.DataAcces;
 using UrlShortenerApiBackend.Models.DataModels;
+using UrlShortenerApiBackend.Services.User;
 
 namespace UrlShortenerApiBackend.Controllers
 {
@@ -15,10 +16,12 @@ namespace UrlShortenerApiBackend.Controllers
     public class UsersController : ControllerBase
     {
         private readonly UrlShortenerDBContext _context;
+        private readonly IUserService _userService;
 
-        public UsersController(UrlShortenerDBContext context)
+        public UsersController(UrlShortenerDBContext context, IUserService userService)
         {
             _context = context;
+            _userService = userService;
         }
 
         // GET: api/Users
@@ -78,6 +81,15 @@ namespace UrlShortenerApiBackend.Controllers
         [HttpPost]
         public async Task<ActionResult<User>> PostUser(User user)
         {
+            if (_userService.CheckIfUserNameExist(user.UserName))
+            {
+                return BadRequest("UserName already in Use");
+            }
+            else if (_userService.CheckIfEmailExist(user.Email))
+            {
+                return BadRequest("Email already in Use");
+            }
+
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 

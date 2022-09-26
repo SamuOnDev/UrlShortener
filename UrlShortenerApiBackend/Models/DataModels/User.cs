@@ -26,8 +26,5 @@ namespace UrlShortenerApiBackend.Models.DataModels
         [Required, PasswordPropertyText]
         public string Password { get; set; } = string.Empty;
         public Role UserRole { get; set; } = Role.User;
-
-        [Required]
-        public ICollection<UrlList> Urls { get; set; } = new List<UrlList>();
     }
 }

@@ -15,13 +15,18 @@ namespace UrlShortenerApiBackend.Services.UserUrlListService
 
         public Task<UrlList> RegisterUrl(UrlDto url)
         {
-            var UrlList = _context.UrlLists.ToList();
+            throw new NotImplementedException();
+        }
 
-            var asg = UrlList.
+        //public Task<UrlList> RegisterUrl(UrlDto url)
+        //{
+        //    var UrlList = _context.UrlLists.ToList();
 
-            var list = UrlList.Id.OrderBy(s => int.Parse(s));
-            var result = Enumerable.Range(list.Min(), list.Count).Except(list).First();
+        //    var asg = UrlList.
 
-        }    
+        //    var list = UrlList.Id.OrderBy(s => int.Parse(s));
+        //    var result = Enumerable.Range(list.Min(), list.Count).Except(list).First();
+
+        //}    
     }     
 }

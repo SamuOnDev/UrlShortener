@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using UrlShortenerApiBackend.DataAcces;
 using UrlShortenerApiBackend.Services.JWT;
+using UrlShortenerApiBackend.Services.User;
 using UrlShortenerApiBackend.Services.UserUrlListService;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -34,29 +35,27 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddControllers();
 
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserUrlListService, UserUrlListService>();
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen(options =>
 {
-    //We define the security for authorization
-    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme // Especificamos el tipo de autenticacion es de tipo "Beaer"
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
-        // Documentamos para que Swagger sepa que esquema de autorizacion tenemos
         Name = "Authorization",
-        Type = SecuritySchemeType.Http, // Tipo de esquema o por donde viaja
-        Scheme = "Bearer", // Esquema que utiliza nuestra autenticacion
-        BearerFormat = "JWT", // Tipo de formato de nuestro Bearer token
-        In = ParameterLocation.Header, // Donde va el Bearer token, en este caso en la cabecera
-        Description = "JWT Authorization Header using Bearer Scheme" // Descripcion para Swagger
+        Type = SecuritySchemeType.Http,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "JWT Authorization Header using Bearer Scheme"
     });
 
-    options.AddSecurityRequirement(new OpenApiSecurityRequirement // Añadimos el requerimiento 
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
         {
-            new OpenApiSecurityScheme // Especificamos el esquema de seguridad
+            new OpenApiSecurityScheme
                 {
                     Reference = new OpenApiReference
                     {

@@ -38,6 +38,7 @@ namespace UrlShortenerApiBackend.Controllers
                         UserName = searchUser.Name,
                         EmailId = searchUser.Email,
                         Id = searchUser.Id,
+                        UserRole = searchUser.UserRole,
                         GuidId = Guid.NewGuid(),
                     }, _jwtSettings);
                 }
