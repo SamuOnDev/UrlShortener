@@ -8,8 +8,8 @@ Project created to shorten URLs and save them in a DB, to be able to count how m
 3. Registered user can shorten URLs and have them saved
 
 #### Languages, Technologies:
-1.Backend: C# .NET
-2.Frontned: (HTML/CSS/TypeScript)
+1. Backend: C# .NET
+2. Frontned: (HTML/CSS/TypeScript)
 3. Database: MSSQL
 
 #### Bonus features:
