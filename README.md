@@ -9,7 +9,7 @@ Project created to shorten URLs and save them in a DB, to be able to count how m
 
 #### Languages, Technologies:
 1. Backend: C# .NET
-2. Frontned: (HTML/CSS/TypeScript)
+2. Frontend: (HTML/CSS/TypeScript) (Simple)
 3. Database: MSSQL
 
 #### Bonus features:
@@ -30,7 +30,7 @@ Proyecto creado para acortar URL y guardarlas en una DB, poder contabilizar cuan
 
 #### Lenguajes, Tecnologías:
 1. Backend: C# .NET
-2. Frontned: (HTML/CSS/TypeScript)
+2. Frontend: (HTML/CSS/TypeScript) (Sencillo)
 3. Base de Datos: MSSQL
 
 #### Características extra:
