@@ -3,6 +3,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace UrlShortenerApiBackend.Models.DataModels
 {
+    public enum Role
+    {
+        User,
+        Administrator
+    }
     public class User : BaseEntity
     {
 
@@ -20,5 +25,6 @@ namespace UrlShortenerApiBackend.Models.DataModels
 
         [Required, PasswordPropertyText]
         public string Password { get; set; } = string.Empty;
+        public Role UserRole { get; set; } = Role.User;
     }
 }

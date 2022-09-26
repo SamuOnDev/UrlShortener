@@ -261,3 +261,5 @@ G:\UrlShortener\UrlShortenerApiBackend\obj\Debug\net6.0\refint\UrlShortenerApiBa
 G:\UrlShortener\UrlShortenerApiBackend\obj\Debug\net6.0\UrlShortenerApiBackend.pdb
 G:\UrlShortener\UrlShortenerApiBackend\obj\Debug\net6.0\UrlShortenerApiBackend.genruntimeconfig.cache
 G:\UrlShortener\UrlShortenerApiBackend\obj\Debug\net6.0\ref\UrlShortenerApiBackend.dll
+G:\UrlShortener\UrlShortenerApiBackend\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+G:\UrlShortener\UrlShortenerApiBackend\bin\Debug\net6.0\Microsoft.IdentityModel.Abstractions.dll
