@@ -11,5 +11,6 @@ namespace UrlShortenerApiBackend.DataAcces
         }
 
         public DbSet<User>? Users { get; set; }
+        public DbSet<UrlList> UrlLists { get; set; }
     }
 }

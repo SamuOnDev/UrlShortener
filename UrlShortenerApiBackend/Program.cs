@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using UrlShortenerApiBackend.DataAcces;
 using UrlShortenerApiBackend.Services.JWT;
+using UrlShortenerApiBackend.Services.UserUrlListService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,11 +20,21 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("UserOnlyPolicy", policy => policy.RequireClaim("UserOnly", "User1"));
 });
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: "CorsPolicy", builder => // El nombre puede ser el que queramos. 
+    {
+        builder.AllowAnyOrigin();
+        builder.AllowAnyMethod();
+        builder.AllowAnyHeader();
+    });
+});
 
 // Add services to the container.
 
 builder.Services.AddControllers();
 
+builder.Services.AddScoped<IUserUrlListService, UserUrlListService>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -70,6 +81,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseCors("CorsPolicy");
 
 app.MapControllers();
 
