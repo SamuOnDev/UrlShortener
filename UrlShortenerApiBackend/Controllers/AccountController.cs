@@ -28,6 +28,7 @@ namespace UrlShortenerApiBackend.Controllers
                 var Token = new UserTokens();
 
                 var searchUser = (from user in _context.Users
+                                  // TODO: Change user.Name for user.UserName
                                   where user.Name == userLogin.UserName && user.Password == userLogin.Password
                                   select user).FirstOrDefault();
 

@@ -3,7 +3,6 @@ using Microsoft.OpenApi.Models;
 using UrlShortenerApiBackend.DataAcces;
 using UrlShortenerApiBackend.Services.JWT;
 using UrlShortenerApiBackend.Services.User;
-using UrlShortenerApiBackend.Services.UserUrlListService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,7 +35,6 @@ builder.Services.AddCors(options =>
 builder.Services.AddControllers();
 
 builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IUserUrlListService, UserUrlListService>();
 
 builder.Services.AddEndpointsApiExplorer();
 

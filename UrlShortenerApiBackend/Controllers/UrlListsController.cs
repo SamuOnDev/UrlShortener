@@ -8,10 +8,10 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 using UrlShortenerApiBackend.DataAcces;
 using UrlShortenerApiBackend.Models.DataModels;
-using UrlShortenerApiBackend.Services.UserUrlListService;
 
 namespace UrlShortenerApiBackend.Controllers
 {
@@ -20,12 +20,10 @@ namespace UrlShortenerApiBackend.Controllers
     public class UrlListsController : ControllerBase
     {
         private readonly UrlShortenerDBContext _context;
-        private readonly IUserUrlListService _userUrlListService;
 
-        public UrlListsController(UrlShortenerDBContext context, IUserUrlListService userUrlListService)
+        public UrlListsController(UrlShortenerDBContext context)
         {
             _context = context;
-            _userUrlListService = userUrlListService;
         }
 
         // GET: api/UrlLists
@@ -83,22 +81,39 @@ namespace UrlShortenerApiBackend.Controllers
         // POST: api/UrlLists
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [Route("url")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "User")]
         public async Task<ActionResult<UrlList>> PostUrlList(UrlDto urlDto)
         {
-            //var shortUrl = _userUrlListService.RegisterUrl(urlDto);
-            var user = HttpContext.User;
+            if (!Uri.TryCreate(urlDto.Url, UriKind.Absolute, out var inputUri))
+            {
+                return BadRequest("Invalid URL format.");
+            }
 
-            var userId = HttpContext.User.Claims.First(i => i.Type == "Id").Value;
+            int userId = Convert.ToInt32(HttpContext.User.Claims.First(i => i.Type == "Id").Value);
 
-            // TODO: Agregar la funcion para guardar la URL en tu lista con el numero de ID del usuario y el resto de funcion con el Short, para que el return sea el link Short 
+            UrlList ReadyToList = new UrlList()
+            {
+                CreatedBy = _context.Users.Where(u => u.Id.Equals(userId)).Select(n => n.UserName).Single(),
+                UserId = userId,
+                Title = urlDto.Title,
+                UsesCounter = 0,
+                Url = urlDto.Url
+            };
 
-            //_context.UrlLists.Add(urlList);
-            //await _context.SaveChangesAsync();
+            _context.UrlLists.Add(ReadyToList);
 
-            //return CreatedAtAction("GetUrlList", new { id = urlList.Id }, urlList);
+            await _context.SaveChangesAsync();
 
-            return Ok($"Url Creada: {userId}");
+            string UrlChunk = WebEncoders.Base64UrlEncode(BitConverter.GetBytes(ReadyToList.Id));
+
+            ReadyToList.ShortUrl = UrlChunk;
+
+            await _context.SaveChangesAsync();
+
+            string resultUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}/{ReadyToList.ShortUrl}";
+
+            return Ok(resultUrl);
         }
 
         // DELETE: api/UrlLists/5

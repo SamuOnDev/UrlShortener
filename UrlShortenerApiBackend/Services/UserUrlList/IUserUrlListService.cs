@@ -1,9 +1,9 @@
-﻿using UrlShortenerApiBackend.Models.DataModels;
+﻿//using UrlShortenerApiBackend.Models.DataModels;
 
-namespace UrlShortenerApiBackend.Services.UserUrlListService
-{
-    public interface IUserUrlListService
-    {
-        Task<UrlList> RegisterUrl(UrlDto url);
-    }
-}
+//namespace UrlShortenerApiBackend.Services.UserUrlListService
+//{
+//    public interface IUserUrlListService
+//    {
+//        Task<UrlList> ConvertUrl(UrlDto url, int Id);
+//    }
+//}

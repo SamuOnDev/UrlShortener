@@ -1,32 +1,33 @@
-﻿using UrlShortenerApiBackend.DataAcces;
-using UrlShortenerApiBackend.Models.DataModels;
-using System.Linq;
+﻿//using UrlShortenerApiBackend.DataAcces;
+//using UrlShortenerApiBackend.Models.DataModels;
+//using System.Linq;
+//using Microsoft.AspNetCore.WebUtilities;
 
-namespace UrlShortenerApiBackend.Services.UserUrlListService
-{
-    public class UserUrlListService : IUserUrlListService
-    {
-        private readonly UrlShortenerDBContext _context;
+//namespace UrlShortenerApiBackend.Services.UserUrlListService
+//{
+//    public class UserUrlListService : IUserUrlListService
+//    {
+//        private readonly UrlShortenerDBContext _context;
 
-        public UserUrlListService(UrlShortenerDBContext context)
-        {
-            _context = context;
-        }
+//        public UserUrlListService(UrlShortenerDBContext context)
+//        {
+//            _context = context;
+//        }
 
-        public Task<UrlList> RegisterUrl(UrlDto url)
-        {
-            throw new NotImplementedException();
-        }
+//        public Task<UrlList> ConvertUrl(UrlDto urlDto, int Id)
+//        {                        
+//            var UrlChunk = WebEncoders.Base64UrlEncode(BitConverter.GetBytes(Id));
 
-        //public Task<UrlList> RegisterUrl(UrlDto url)
-        //{
-        //    var UrlList = _context.UrlLists.ToList();
+//            var ReadyToList = new UrlList()
+//            {
+//                UserId = Id,
+//                Title = "Titulo de prueba",
+//                UsesCounter = 0,
+//                Url = urlDto.Url,
+//                ShortUrl = UrlChunk
+//            };
 
-        //    var asg = UrlList.
-
-        //    var list = UrlList.Id.OrderBy(s => int.Parse(s));
-        //    var result = Enumerable.Range(list.Min(), list.Count).Except(list).First();
-
-        //}    
-    }     
-}
+//            return Task.FromResult(ReadyToList);
+//        }
+//    }     
+//}
