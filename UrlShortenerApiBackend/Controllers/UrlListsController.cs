@@ -118,18 +118,27 @@ namespace UrlShortenerApiBackend.Controllers
 
         // DELETE: api/UrlLists/5
         [HttpDelete("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "User")]
         public async Task<IActionResult> DeleteUrlList(int id)
         {
-            var urlList = await _context.UrlLists.FindAsync(id);
+            int userId = Convert.ToInt32(HttpContext.User.Claims.First(i => i.Type == "Id").Value);
+
+            UrlList? urlList = await _context.UrlLists.FindAsync(id);
+
             if (urlList == null)
             {
                 return NotFound();
             }
 
-            _context.UrlLists.Remove(urlList);
-            await _context.SaveChangesAsync();
+            if (urlList.UserId == userId)
+            {
+                _context.UrlLists.Remove(urlList);
+                await _context.SaveChangesAsync();
 
-            return NoContent();
+                return Ok("URL Deleted");
+            }
+
+            return BadRequest("The user not match");
         }
 
         private bool UrlListExists(int id)
