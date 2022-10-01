@@ -32,7 +32,7 @@ Proyecto creado para acortar URL y guardarlas en una DB, poder contabilizar cuan
 2. Autorización (JWT Token)
 3. El usuario registrado puede acortar URLs y tenerlas guardadas
 
-#### Lenguajes, Tecnologías:
+#### Contruido con:
 - ![C#](https://img.shields.io/badge/c%23-%23239120.svg?style=for-the-badge&logo=c-sharp&logoColor=white) 
 - ![.Net](https://img.shields.io/badge/.NET-5C2D91?style=for-the-badge&logo=.net&logoColor=white)
 - ![Angular](https://img.shields.io/badge/angular-%23DD0031.svg?style=for-the-badge&logo=angular&logoColor=white)
