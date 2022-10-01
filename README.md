@@ -25,7 +25,7 @@ Proyecto creado para acortar URL y guardarlas en una DB, poder contabilizar cuan
 
 #### El proyecto consta de:
 1. Autenticación (Registro y Login)
-2. Autorización (Token)
+2. Autorización (JWT Token)
 3. El usuario registrado puede acortar URLs y tenerlas guardadas
 
 #### Lenguajes, Tecnologías:
