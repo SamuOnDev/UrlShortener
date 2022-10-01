@@ -17,6 +17,9 @@ Project created to shorten URLs and save them in a DB, to be able to count how m
 2. Get metrics, for example, how many times X URL has been opened.
 3. Obtain the Geolocation of the connection.
 
+# License
+Feel free to use the code in this repository as it is under MIT license.
+
 ---
 
 # Acortador de URL
@@ -37,3 +40,6 @@ Proyecto creado para acortar URL y guardarlas en una DB, poder contabilizar cuan
 1. A las URLs acortadas se les pueda poner una fecha de expiración.
 2. Obtener métricas, por ejemplo, cuantas veces se ha abierto X URL.
 3. Obtener la Geolocalizacion de la conexion.
+
+# Licencia
+Puedes utilizar este codigo libremente el repositorio esta bajo la licencia MIT.
