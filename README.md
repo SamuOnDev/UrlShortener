@@ -1,3 +1,13 @@
+<a name="readme-top"></a>
+
+[![Contributors][contributors-shield]][contributors-url]
+[![Forks][forks-shield]][forks-url]
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
+[![MIT License][license-shield]][license-url]
+[![LinkedIn][linkedin-shield]][linkedin-url]
+
+
 # UrlShortener
 
 Project created to shorten URLs and save them in a DB, to be able to count how many interactions it has and from where that URL is entered.
@@ -7,10 +17,10 @@ Project created to shorten URLs and save them in a DB, to be able to count how m
 2. Authorization (JWT Token)
 3. Registered user can shorten URLs and have them saved
 
-#### Languages, Technologies:
-1. Backend: C# .NET
-2. Frontend: Angular 14 (Sencillo)
-3. Database: MSSQL
+#### Built With:
+1. Backend: ![C#](https://img.shields.io/badge/c%23-%23239120.svg?style=for-the-badge&logo=c-sharp&logoColor=white) ![.Net](https://img.shields.io/badge/.NET-5C2D91?style=for-the-badge&logo=.net&logoColor=white)
+2. Frontend: ![Angular](https://img.shields.io/badge/angular-%23DD0031.svg?style=for-the-badge&logo=angular&logoColor=white)
+3. Database: ![MicrosoftSQLServer](https://img.shields.io/badge/Microsoft%20SQL%20Sever-CC2927?style=for-the-badge&logo=microsoft%20sql%20server&logoColor=white)
 
 #### Bonus features:
 1. Shortened URLs can be given an expiration date.
