@@ -4,12 +4,12 @@ Project created to shorten URLs and save them in a DB, to be able to count how m
 
 #### The project consists of:
 1. Authentication (Registration and Login)
-2. Authorization (Token)
+2. Authorization (JWT Token)
 3. Registered user can shorten URLs and have them saved
 
 #### Languages, Technologies:
 1. Backend: C# .NET
-2. Frontend: (HTML/CSS/TypeScript) (Simple)
+2. Frontend: Angular 14 (Sencillo)
 3. Database: MSSQL
 
 #### Bonus features:
@@ -30,7 +30,7 @@ Proyecto creado para acortar URL y guardarlas en una DB, poder contabilizar cuan
 
 #### Lenguajes, Tecnologías:
 1. Backend: C# .NET
-2. Frontend: (HTML/CSS/TypeScript) (Sencillo)
+2. Frontend: Angular 14 (Sencillo)
 3. Base de Datos: MSSQL
 
 #### Características extra:
