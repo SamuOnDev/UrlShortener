@@ -1,15 +1,39 @@
-# Stage 1: Build an Angular Docker Image
-FROM node:12.7-alpine AS build
-WORKDIR /app
-COPY / ./
-COPY package*.json ./
+#Stage 1
+FROM node as build
+WORKDIR /apps
+COPY ./UrlShortenerFrontend/. .
+RUN npm install
+COPY . /apps/
+ARG configuration=production
+RUN npm run build
 
-RUN npm install -g @angular/cli@10.0.4 && \
-    npm install && \
-    ng build
-COPY . .
+#stage 2
+FROM nginx:alpine
+RUN rm -rf /usr/share/nginx/html/*
+COPY ./UrlShortenerFrontend/nginx.conf /etc/nginx/conf.d/
+COPY --from=build /apps/dist/ /usr/share/nginx/html/
 
-# Stage 2, use the compiled app, ready for production with Nginx
-FROM nginx:1.17.1-alpine
-WORKDIR /app
-COPY --from=build /app/dist/ui /usr/share/nginx/html
+
+
+
+# # Stage 1
+
+# FROM node:10-alpine as build-step
+
+# RUN mkdir -p /app
+
+# WORKDIR /app
+
+# COPY package.json /app
+
+# RUN npm install
+
+# COPY . /app
+
+# RUN npm run build --prod
+
+# # Stage 2
+
+# FROM nginx:1.17.1-alpine
+
+# COPY --from=build-step /app/docs /usr/share/nginx/html
