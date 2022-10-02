@@ -35,7 +35,8 @@ namespace UrlShortenerApiBackend.Services.Auth
                 return (new JWTTokenResponse
                 {
                     Token = token,
-                    UserId = userDb.Id
+                    UserId = userDb.Id,
+                    UserName = userDb.UserName
                 });
 
             }

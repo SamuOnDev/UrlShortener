@@ -2,8 +2,11 @@
 
 namespace UrlShortenerApiBackend.Models.DataModels
 {
-    public class UrlList : BaseEntity
+    public class UrlList
     {
+        [Required]
+        [Key]
+        public int Id { get; set; }
         [Required]
         public int UserId { get; set; }
         [Required]

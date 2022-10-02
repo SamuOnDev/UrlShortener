@@ -7,7 +7,12 @@ using UrlShortenerApiBackend.DataAcces;
 using UrlShortenerApiBackend.Services;
 using UrlShortenerApiBackend.Services.Auth;
 using UrlShortenerApiBackend.Services.UserRegister;
+using UrlShortenerApiBackend.Services.UrlLists;
 using ConfigurationManager = UrlShortenerApiBackend.Manager.ConfigurationManager;
+using Microsoft.AspNetCore.WebUtilities;
+using UrlShortenerApiBackend.Services.Url;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Builder;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -47,6 +52,8 @@ builder.Services.AddSwaggerGen(options => {
 
 builder.Services.AddScoped<ICacheService, CacheService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IUrlListsService, UrlListsService>();
+builder.Services.AddScoped<IUrlService, UrlService>(); 
 builder.Services.AddScoped<IUserRegisterService, UserRegisterService>();
 
 builder.Services.AddDbContext<DbContextClass>();

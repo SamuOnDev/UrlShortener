@@ -21,29 +21,35 @@ namespace UrlShortenerApiBackend.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("UrlShortenerApiBackend.Models.DataModels.Product", b =>
+            modelBuilder.Entity("UrlShortenerApiBackend.Models.DataModels.UrlList", b =>
                 {
-                    b.Property<int>("ProductId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("ProductCost")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ProductDescription")
+                    b.Property<string>("ShortUrl")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ProductName")
+                    b.Property<string>("Title")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ProductStock")
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.HasKey("ProductId");
+                    b.Property<int>("UsesCounter")
+                        .HasColumnType("int");
 
-                    b.ToTable("Products");
+                    b.HasKey("Id");
+
+                    b.ToTable("UrlLists");
                 });
 
             modelBuilder.Entity("UrlShortenerApiBackend.Models.DataModels.User", b =>

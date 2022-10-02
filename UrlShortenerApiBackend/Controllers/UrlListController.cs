@@ -4,8 +4,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using UrlShortenerApiBackend.DataAcces;
 using UrlShortenerApiBackend.Models.DataModels;
+using UrlShortenerApiBackend.Services.UrlLists;
 
 namespace UrlShortenerApiBackend.Controllers
 {
@@ -14,15 +16,39 @@ namespace UrlShortenerApiBackend.Controllers
     public class UrlListController : ControllerBase
     {
         private readonly DbContextClass _context;
+        private readonly IUrlListsService _urlListsService;
 
-        public UrlListController(DbContextClass context)
+        public UrlListController(DbContextClass context, IUrlListsService urlListsService)
         {
             _context = context;
+            _urlListsService = urlListsService;
         }
 
+        [HttpGet]
+        [Route("UrlList")]
+        public async Task<ActionResult<IEnumerable<UrlList>>> GetUrlList(int UserId)
+        {
+            IEnumerable<UrlList> urlList = await _urlListsService.GetUrlListByUser(UserId);
+
+            return Ok(urlList);
+        }
+
+        //[HttpGet]
+        //[Route("UrlDetail")]
+        //public async Task<ActionResult<UrlList>> GetUrlDetails(int urlId)
+        //{
+        //    UrlList urlDetails = await _context.UrlLists.Where(x => x.Id == urlId).SingleAsync();
+
+        //    if (urlDetails is null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return urlDetails;
+        //}
+
         [HttpPost]
-        [Route("url")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "User")]
+        [Route("CreateUrl")]
         public async Task<ActionResult<UrlList>> PostUrlList(UrlDto urlDto)
         {
             if (!Uri.TryCreate(urlDto.Url, UriKind.Absolute, out var inputUri))
@@ -30,31 +56,20 @@ namespace UrlShortenerApiBackend.Controllers
                 return BadRequest("Invalid URL format.");
             }
 
-            int userId = Convert.ToInt32(HttpContext.User.Claims.First(i => i.Type == "Id").Value);
+            UrlList urlListed = await _urlListsService.CreateUrlOnDBAsync(urlDto);
 
-            UrlList ReadyToList = new UrlList()
-            {
-                Id = _context.UrlLists.Max(x => x.Id) + 1,
-                CreatedBy = _context.Users.Where(u => u.Id.Equals(userId)).Select(n => n.UserName).Single(),
-                UserId = userId,
-                Title = urlDto.Title,
-                UsesCounter = 0,
-                Url = urlDto.Url
-            };
-
-            _context.UrlLists.Add(ReadyToList);
-
-            await _context.SaveChangesAsync();
-
-            string UrlChunk = WebEncoders.Base64UrlEncode(BitConverter.GetBytes(ReadyToList.Id));
-
-            ReadyToList.ShortUrl = UrlChunk;
-
-            await _context.SaveChangesAsync();
-
-            string resultUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}/{ReadyToList.ShortUrl}";
+            string resultUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}/{urlListed.ShortUrl}";
 
             return Ok(resultUrl);
+        }
+
+        [HttpDelete]
+        [Route("DeleteUrl")]
+        public async Task<IActionResult> DeleteUrl(int idToDelete)
+        {
+            await _urlListsService.DeleteUrlOnDBAsync(idToDelete);
+
+            return NoContent();
         }
     }
 }

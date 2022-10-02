@@ -14,7 +14,6 @@ namespace UrlShortenerApiBackend.DataAcces
         {
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
         }
-        public DbSet<Product> Products { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<UrlList> UrlLists { get; set; }
     }
