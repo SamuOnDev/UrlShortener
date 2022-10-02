@@ -1,69 +1,70 @@
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Text;
+using UrlShortenerApiBackend.Cache;
 using UrlShortenerApiBackend.DataAcces;
-using UrlShortenerApiBackend.Services.JWT;
-using UrlShortenerApiBackend.Services.User;
+using UrlShortenerApiBackend.Services;
+using UrlShortenerApiBackend.Services.Auth;
+using UrlShortenerApiBackend.Services.UserRegister;
+using ConfigurationManager = UrlShortenerApiBackend.Manager.ConfigurationManager;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// SQL Connection
-const string CONNECTIONNAME = "UrlShortenerDB";
-var connectionString = builder.Configuration.GetConnectionString(CONNECTIONNAME);
-builder.Services.AddDbContext<UrlShortenerDBContext>(options => options.UseSqlServer(connectionString));
-
-// JWT Autorization
-builder.Services.AddJwtTokenServices(builder.Configuration);
-
-//Add Authorization
-builder.Services.AddAuthorization(options =>
-{
-    options.AddPolicy("UserOnlyPolicy", policy => policy.RequireClaim("UserOnly", "User1"));
-});
-
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy(name: "CorsPolicy", builder => // El nombre puede ser el que queramos. 
-    {
-        builder.AllowAnyOrigin();
-        builder.AllowAnyMethod();
-        builder.AllowAnyHeader();
-    });
-});
 
 // Add services to the container.
 
 builder.Services.AddControllers();
 
-builder.Services.AddScoped<IUserService, UserService>();
-
 builder.Services.AddEndpointsApiExplorer();
-
-builder.Services.AddSwaggerGen(options =>
-{
+builder.Services.AddSwaggerGen(options => {
+    options.SwaggerDoc("V1", new OpenApiInfo
+    {
+        Version = "V1",
+        Title = "WebAPI",
+        Description = "Product WebAPI"
+    });
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
-        Name = "Authorization",
-        Type = SecuritySchemeType.Http,
         Scheme = "Bearer",
         BearerFormat = "JWT",
         In = ParameterLocation.Header,
-        Description = "JWT Authorization Header using Bearer Scheme"
+        Name = "Authorization",
+        Description = "Bearer Authentication with JWT Token",
+        Type = SecuritySchemeType.Http
     });
-
-    options.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement {
         {
-            new OpenApiSecurityScheme
-                {
-                    Reference = new OpenApiReference
-                    {
-                        Type = ReferenceType.SecurityScheme,
-                        Id = "Bearer"
-                    }
-                },
-            new string[]{}
+            new OpenApiSecurityScheme {
+                Reference = new OpenApiReference {
+                    Id = "Bearer",
+                        Type = ReferenceType.SecurityScheme
+                }
+            },
+            new List < string > ()
         }
     });
+});
+
+builder.Services.AddScoped<ICacheService, CacheService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IUserRegisterService, UserRegisterService>();
+
+builder.Services.AddDbContext<DbContextClass>();
+
+builder.Services.AddAuthentication(opt => {
+    opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options => {
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = ConfigurationManager.AppSetting["JWT:ValidIssuer"],
+        ValidAudience = ConfigurationManager.AppSetting["JWT:ValidAudience"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(ConfigurationManager.AppSetting["JWT:Secret"]))
+    };
 });
 
 var app = builder.Build();
@@ -72,15 +73,19 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(options => {
+        options.SwaggerEndpoint("/swagger/V1/swagger.json", "Product WebAPI");
+    });
 }
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
+
 app.UseAuthorization();
 
-app.UseCors("CorsPolicy");
-
 app.MapControllers();
+
+app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
 app.Run();

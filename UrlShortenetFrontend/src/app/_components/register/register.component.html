@@ -1,0 +1,38 @@
+<nav class="navbar navbar-expand-lg navbar navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">URL Shortener Application</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+        aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/">Login</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<form class="form-signin" #registerForm="ngForm" (ngSubmit)="register(registerForm)">
+    <div class="container-fluid">
+        <h2 class="form-signin-heading">User Register</h2>
+        <div *ngIf="invalidUser" class="alert alert-danger">Something went wrong.</div>
+        <br />
+        <label for="username" class="sr-only">User Name</label>
+        <input type="text" id="username" name="username" ngModel class="form-control" placeholder="User Name" required
+            autofocus>
+        <br />
+        <label for="email" class="sr-only">Email address</label>
+        <input type="email" id="email" name="email" ngModel class="form-control" placeholder="User Email" required
+            autofocus>
+        <br />
+        <label for="password" class="sr-only">Password</label>
+        <input type="password" id="password" name="password" [(ngModel)]="password" class="form-control" placeholder="Password"
+            required (keyup)="check()">
+        <br />
+        <label for="password" class="sr-only">Confirm Password </label> <span [innerHTML]="htmlStr" [ngStyle]="myStyles"></span>
+        <input type="password" id="confirm_password" name="confirm_password" [(ngModel)]="confirm_password" class="form-control" placeholder="Confirm Password"
+            required (keyup)='check();'>
+        <br />
+        <button class="btn btn-lg btn-primary btn-block" type="submit" [disabled]="!validated">Register</button>
+    </div>
+</form>

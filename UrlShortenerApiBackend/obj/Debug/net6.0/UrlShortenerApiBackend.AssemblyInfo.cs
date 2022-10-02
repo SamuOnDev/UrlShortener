@@ -11,7 +11,7 @@
 using System;
 using System.Reflection;
 
-[assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("263951d8-c282-43d9-bd8e-c0424dbeb8af")]
+[assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("85713b4e-8ed8-4fed-b6e3-313d9f369360")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("UrlShortenerApiBackend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
