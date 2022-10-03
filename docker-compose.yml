@@ -13,6 +13,7 @@ services:
         ports:
             - "7232:443"
             - "7232:80"
+            - "80:80"
         depends_on:
             - db
 
@@ -32,7 +33,6 @@ services:
             dockerfile: UrlShortenerFrontend/Dockerfile
         ports:
             - "4200:4200"
-            - "4200:80"
-            - "80"
+            - "80:80"
         expose:
             - "80"
