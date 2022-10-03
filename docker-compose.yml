@@ -29,3 +29,6 @@ services:
         - "4200:80"
     links:
       - urlshortenerapibackend
+    expose:
+      - "4200"
+      - "80"
