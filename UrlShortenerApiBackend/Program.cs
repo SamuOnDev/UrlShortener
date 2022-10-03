@@ -75,16 +75,6 @@ builder.Services.AddAuthentication(opt => {
     };
 });
 
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy(name: "CorsPolicy", builder =>
-    {
-        builder.AllowAnyOrigin();
-        builder.AllowAnyMethod();
-        builder.AllowAnyHeader();
-    });
-});
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -104,7 +94,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.UseCors("CorsPolicy");
+app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
 using (var scope = app.Services.CreateScope())
 {
