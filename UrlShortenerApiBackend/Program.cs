@@ -75,15 +75,15 @@ builder.Services.AddAuthentication(opt => {
     };
 });
 
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy(name: "CorsPolicy", builder =>
-    {
-        builder.WithOrigins("http://rtsho.site", "https://localhost");
-        builder.AllowAnyMethod();
-        builder.AllowAnyHeader();
-    });
-});
+//builder.Services.AddCors(options =>
+//{
+//    options.AddPolicy(name: "CorsPolicy", builder =>
+//    {
+//        builder.WithOrigins("http://rtsho.site", "https://localhost");
+//        builder.AllowAnyMethod();
+//        builder.AllowAnyHeader();
+//    });
+//});
 
 var app = builder.Build();
 
@@ -104,7 +104,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.UseCors("CorsPolicy");
+//app.UseCors("CorsPolicy");
 
 using (var scope = app.Services.CreateScope())
 {
