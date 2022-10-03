@@ -79,7 +79,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: "CorsPolicy", builder =>
     {
-        builder.AllowAnyOrigin();
+        builder.WithOrigins("http://rtsho.site", "https://localhost");
         builder.AllowAnyMethod();
         builder.AllowAnyHeader();
     });
