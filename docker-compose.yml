@@ -12,7 +12,6 @@ services:
             - ENV ASPNETCORE_URLS=http://+:80
         ports:
             - "7232:443"
-            - "7232:80"
         depends_on:
             - db
 
