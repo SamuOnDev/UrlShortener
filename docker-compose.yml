@@ -13,7 +13,6 @@ services:
         ports:
             - "7232:443"
             - "7232:80"
-            - "80:80"
         depends_on:
             - db
 
