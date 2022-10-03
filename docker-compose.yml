@@ -1,32 +1,38 @@
 version: '3.4'
 
 services:
-  urlshortenerapibackend:
-    image: ${DOCKER_REGISTRY-}urlshortenerapibackend
-    build:
-      context: .
-      dockerfile: UrlShortenerApiBackend/Dockerfile
-    ports:
-        - "8080:8080"
-    depends_on:
-        - db
+    urlshortenerapibackend:
+        image: ${DOCKER_REGISTRY-}urlshortenerapibackend
+        build:
+            context: .
+            dockerfile: UrlShortenerApiBackend/Dockerfile
+        environment:
+            - ASPNETCORE_ENVIRONMENT=Production
+            - ENV ASPNETCORE_URLS=http://+:7232
+            - ENV ASPNETCORE_URLS=http://+:80
+        ports:
+            - "7232:443"
+            - "7232:80"
+        depends_on:
+            - db
 
-  db:
-    image: "mcr.microsoft.com/mssql/server:2022-latest"
-    ports:
-        - "1433:1433"
+    db:
+        image: "mcr.microsoft.com/mssql/server:2022-latest"
+        ports:
+            - "1433:1433"
 
-    environment:
-        SA_PASSWORD: "S3cur3P@ssW0rd!"
-        ACCEPT_EULA: "Y"
+        environment:
+            SA_PASSWORD: "S3cur3P@ssW0rd!"
+            ACCEPT_EULA: "Y"
 
-  urlshortenetfrontend:
-    image: ${DOCKER_REGISTRY-}urlshortenerfrontend
-    build:
-        context: .
-        dockerfile: UrlShortenerFrontend/Dockerfile
-    ports:
-        - "4200:80"
-    expose:
-      - "4200"
-      - "80"
+    urlshortenetfrontend:
+        image: ${DOCKER_REGISTRY-}urlshortenerfrontend
+        build:
+            context: .
+            dockerfile: UrlShortenerFrontend/Dockerfile
+        ports:
+            - "4200:4200"
+            - "4200:80"
+            - "80"
+        expose:
+            - "80"

@@ -50,7 +50,7 @@
                             (click)="UpdateURl(urlForm.value)">Update</button>
                     </div> -->
                     <div class="col-sm">
-                        <button type="submit" class="btn btn-primary" (click)="Clear(urlForm.value)">Clear</button>
+                        <button type="submit" class="btn btn-primary" (click)="Clear(urlFormSend.value)">Clear</button>
                     </div>
                 </div>
             </div>
@@ -76,7 +76,7 @@
                             <td>{{url.title}}</td>
                             <td>{{url.usesCounter}}</td>
                             <td><a href="{{url.url}}" target="_blank" style="color: inherit; text-decoration: inherit;">{{url.url}}</a></td>
-                            <td><a href="{{url.shortUrl}}" target="_blank" style="color: inherit; text-decoration: inherit;">{{url.shortUrl}}</a></td>
+                            <td><a href=":7232/{{url.shortUrl}}" target="_blank" style="color: inherit; text-decoration: inherit;">{{url.shortUrl}}</a></td>
                             <td>
                                 <!-- <button type="button" class="btn1" matTooltip="Click Edit Button"
                                     (click)='UrlDetailsToEdit(url.id)'>Edit</button>

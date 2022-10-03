@@ -58,9 +58,12 @@ namespace UrlShortenerApiBackend.Controllers
 
             UrlList urlListed = await _urlListsService.CreateUrlOnDBAsync(urlDto);
 
-            string resultUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}/{urlListed.ShortUrl}";
+            if (urlListed is null)
+            {
+                return BadRequest();
+            }
 
-            return Ok(resultUrl);
+            return Ok();
         }
 
         [HttpDelete]

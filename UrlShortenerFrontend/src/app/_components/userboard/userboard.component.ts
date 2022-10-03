@@ -88,7 +88,7 @@ export class UserBoardComponent implements OnInit {
   }
 
   Clear(url: Urls) {
-    this.urlForm.reset();
+    this.urlFormSend.reset();
   }
 
   public logOut = () => {
